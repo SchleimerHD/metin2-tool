@@ -3,351 +3,370 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Metin2 Tool</title>
+    <title>Metin2 Skill Tool</title>
     <style>
+        :root {
+            --bg-1: #0c0f13;
+            --bg-2: #171d25;
+            --panel: #1b222b;
+            --panel-2: #222b34;
+            --gold: #d4af5f;
+            --gold-strong: #f3d58e;
+            --olive: #6b7a46;
+            --stone: #9aa4aa;
+            --red: #b63f3f;
+            --shadow: rgba(0, 0, 0, 0.55);
+            --line: rgba(212, 175, 95, 0.35);
+        }
+
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             display: flex;
-            justify-content: center;
             align-items: center;
-            padding: 20px;
+            justify-content: center;
+            background:
+                radial-gradient(circle at top, rgba(212, 175, 95, 0.15), transparent 28%),
+                linear-gradient(180deg, #090b0d 0%, #161b20 100%);
+            color: #efe7d0;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            padding: 30px 20px;
         }
 
-        .container {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            padding: 40px;
-            max-width: 600px;
-            width: 100%;
+        .tool {
+            width: min(760px, 100%);
+            background: linear-gradient(180deg, rgba(28,34,40,0.96), rgba(17,20,24,0.96));
+            border: 2px solid var(--gold);
+            border-radius: 12px;
+            box-shadow:
+                0 0 0 2px rgba(20,20,20,0.9),
+                0 10px 30px var(--shadow),
+                inset 0 0 30px rgba(212, 175, 95, 0.08);
+            overflow: hidden;
         }
 
-        h1 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 40px;
-            font-size: 28px;
+        .topbar {
+            background: linear-gradient(180deg, #23313b, #11181f);
+            border-bottom: 2px solid var(--gold);
+            padding: 18px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            letter-spacing: 1px;
         }
 
-        /* Bereich 1: Elemente */
-        .section {
-            margin-bottom: 40px;
+        .logo {
+            color: var(--gold-strong);
+            font-weight: 700;
+            font-size: 20px;
+            text-transform: uppercase;
+            text-shadow: 0 0 8px rgba(243, 213, 142, 0.6);
         }
 
-        .section-title {
-            font-size: 16px;
-            font-weight: 600;
-            color: #666;
-            margin-bottom: 15px;
+        .status {
+            color: #b8c2c8;
+            font-size: 12px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        .content {
+            padding: 22px 18px 18px;
+        }
+
+        .panel {
+            background: linear-gradient(180deg, rgba(22, 29, 35, 0.95), rgba(14, 18, 21, 0.95));
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            box-shadow: inset 0 0 18px rgba(0,0,0,0.25);
+            padding: 18px 16px;
+            margin-bottom: 18px;
+        }
+
+        .panel-title {
+            color: var(--gold-strong);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 14px;
+            text-shadow: 0 0 10px rgba(243, 213, 142, 0.3);
+        }
+
+        .elements {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .element-btn {
+            appearance: none;
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 8px;
+            color: #f5e9c8;
+            background: linear-gradient(180deg, rgba(58, 57, 49, 0.8), rgba(26, 30, 31, 0.9));
+            min-height: 72px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+            box-shadow: inset 0 0 12px rgba(255,255,255,0.04);
+        }
+
+        .element-btn:hover {
+            transform: translateY(-1px);
+            border-color: rgba(243, 213, 142, 0.8);
+            box-shadow: 0 0 12px rgba(243, 213, 142, 0.25);
+        }
+
+        .element-btn.fire {
+            background: linear-gradient(180deg, rgba(90, 32, 27, 0.9), rgba(47, 19, 17, 0.9));
+        }
+
+        .element-btn.wind {
+            background: linear-gradient(180deg, rgba(48, 76, 45, 0.9), rgba(26, 39, 26, 0.9));
+        }
+
+        .element-btn.water {
+            background: linear-gradient(180deg, rgba(28, 54, 79, 0.9), rgba(18, 35, 49, 0.9));
+        }
+
+        .element-btn.air {
+            background: linear-gradient(180deg, rgba(80, 67, 36, 0.9), rgba(47, 40, 20, 0.9));
+        }
+
+        .sequence-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .num-btn {
+            appearance: none;
+            border: 1px solid rgba(212, 175, 95, 0.6);
+            border-radius: 8px;
+            background: linear-gradient(180deg, #2a3340, #171d22);
+            color: var(--gold-strong);
+            font-size: 22px;
+            font-weight: 700;
+            min-height: 72px;
+            cursor: pointer;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+            box-shadow: inset 0 0 16px rgba(212, 175, 95, 0.08);
+        }
+
+        .num-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 0 14px rgba(212, 175, 95, 0.25);
+        }
+
+        .sequence-box {
+            background: rgba(11, 15, 18, 0.85);
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            min-height: 86px;
+            padding: 12px;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            box-shadow: inset 0 0 12px rgba(0,0,0,0.3);
+        }
+
+        .seq-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(180deg, rgba(212, 175, 95, 0.18), rgba(146, 122, 68, 0.2));
+            color: #f5e7b7;
+            border: 1px solid rgba(212, 175, 95, 0.5);
+            border-radius: 6px;
+            padding: 6px 10px;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .seq-no {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: rgba(243, 213, 142, 0.18);
+            border: 1px solid rgba(243, 213, 142, 0.4);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+        }
+
+        .empty {
+            color: #8a9298;
+            font-size: 13px;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
-        .elements-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
-            margin-bottom: 30px;
-        }
-
-        .element-btn {
-            padding: 20px 10px;
-            border: none;
-            border-radius: 12px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .element-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-        }
-
-        .element-btn:active {
-            transform: translateY(0);
-        }
-
-        .fire {
-            background: linear-gradient(135deg, #ff6b6b, #ff8787);
-            color: white;
-        }
-
-        .wind {
-            background: linear-gradient(135deg, #4ecdc4, #44a080);
-            color: white;
-        }
-
-        .water {
-            background: linear-gradient(135deg, #3b82f6, #1e40af);
-            color: white;
-        }
-
-        .air {
-            background: linear-gradient(135deg, #fbbf24, #f59e0b);
-            color: white;
-        }
-
-        /* Bereich 2: Sequenz-Buttons */
-        .sequence-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            margin-bottom: 30px;
-        }
-
-        .sequence-btn {
-            padding: 30px;
-            border: 2px solid #ddd;
-            border-radius: 12px;
-            font-size: 18px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            background: white;
-            color: #333;
-        }
-
-        .sequence-btn:hover {
-            border-color: #667eea;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
-        }
-
-        .sequence-btn:active {
-            transform: scale(0.95);
-        }
-
-        /* Visualisierung der Sequenz */
-        .sequence-display {
-            background: #f8f9fa;
-            border: 2px dashed #ddd;
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 20px;
-            min-height: 60px;
-        }
-
-        .sequence-title {
-            font-size: 12px;
-            font-weight: 600;
-            color: #999;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-        }
-
-        .sequence-items {
+        .actions {
             display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
+            gap: 10px;
+            margin-top: 10px;
         }
 
-        .sequence-item {
-            background: #667eea;
-            color: white;
-            padding: 8px 12px;
-            border-radius: 6px;
-            font-size: 14px;
-            font-weight: 600;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
+        .btn {
+            flex: 1;
+            appearance: none;
+            border: 1px solid rgba(212,175,95,0.7);
+            border-radius: 8px;
+            padding: 12px 10px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: transform 0.15s ease, filter 0.15s ease;
         }
 
-        .sequence-item .number {
-            background: rgba(255, 255, 255, 0.3);
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
+        .btn:hover {
+            transform: translateY(-1px);
+            filter: brightness(1.08);
+        }
+
+        .btn.clear {
+            background: linear-gradient(180deg, #4f4133, #2d231d);
+            color: #f4d9a8;
+        }
+
+        .btn.reset {
+            background: linear-gradient(180deg, #5d2e2c, #2b1a1a);
+            color: #f6cac0;
+        }
+
+        .bottom-panel {
+            min-height: 110px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 12px;
-        }
-
-        /* Button zum Zurücksetzen */
-        .button-group {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 30px;
-        }
-
-        .reset-btn {
-            flex: 1;
-            padding: 12px;
-            background: #ff6b6b;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .reset-btn:hover {
-            background: #ff5252;
-            transform: translateY(-2px);
-        }
-
-        .clear-btn {
-            flex: 1;
-            padding: 12px;
-            background: #fbbf24;
-            color: #333;
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .clear-btn:hover {
-            background: #f59e0b;
-            transform: translateY(-2px);
-        }
-
-        /* Bereich 3: Erweiterbar */
-        .section-bottom {
-            background: #f0f4ff;
-            border: 2px dashed #667eea;
-            border-radius: 12px;
-            padding: 30px;
             text-align: center;
-            color: #667eea;
+            color: var(--gold-strong);
             font-size: 14px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            background: linear-gradient(180deg, rgba(31, 28, 22, 0.75), rgba(18, 18, 17, 0.7));
         }
 
-        @media (max-width: 600px) {
-            .container {
-                padding: 20px;
-            }
-
-            .elements-grid {
-                grid-template-columns: repeat(2, 1fr);
+        @media (max-width: 560px) {
+            .elements {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
             }
 
             .sequence-grid {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns: repeat(2, minmax(0, 1fr));
             }
 
-            h1 {
-                font-size: 22px;
-                margin-bottom: 30px;
+            .topbar {
+                flex-direction: column;
+                gap: 8px;
+                text-align: center;
+            }
+
+            .actions {
+                flex-direction: column;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>⚔️ Metin2 Tool</h1>
-
-        <!-- Bereich 1: Elemente -->
-        <div class="section">
-            <div class="section-title">Elemente</div>
-            <div class="elements-grid">
-                <button class="element-btn fire" onclick="addElement('🔥 Feuer')">🔥 Feuer</button>
-                <button class="element-btn wind" onclick="addElement('💨 Wind')">💨 Wind</button>
-                <button class="element-btn water" onclick="addElement('💧 Wasser')">💧 Wasser</button>
-                <button class="element-btn air" onclick="addElement('⚡ Luft')">⚡ Luft</button>
-            </div>
+    <div class="tool">
+        <div class="topbar">
+            <div class="logo">Metin2 Tool</div>
+            <div class="status">Combat Assistant</div>
         </div>
 
-        <!-- Bereich 2: Sequenz -->
-        <div class="section">
-            <div class="section-title">Sequenz</div>
-            
-            <div class="sequence-display">
-                <div class="sequence-title">Eingabe-Reihenfolge:</div>
-                <div class="sequence-items" id="sequenceDisplay"></div>
+        <div class="content">
+            <div class="panel">
+                <div class="panel-title">Elemente</div>
+                <div class="elements">
+                    <button class="element-btn fire" onclick="addElement('Feuer')">🔥 Feuer</button>
+                    <button class="element-btn wind" onclick="addElement('Wind')">💨 Wind</button>
+                    <button class="element-btn water" onclick="addElement('Wasser')">💧 Wasser</button>
+                    <button class="element-btn air" onclick="addElement('Luft')">⚡ Luft</button>
+                </div>
             </div>
 
-            <div class="sequence-grid">
-                <button class="sequence-btn" onclick="addSequence(1)">1</button>
-                <button class="sequence-btn" onclick="addSequence(2)">2</button>
-                <button class="sequence-btn" onclick="addSequence(3)">3</button>
-                <button class="sequence-btn" onclick="addSequence(4)">4</button>
-                <button class="sequence-btn" onclick="addSequence(5)">5</button>
-                <button class="sequence-btn" onclick="addSequence(6)">6</button>
+            <div class="panel">
+                <div class="panel-title">Combo Reihenfolge</div>
+                <div class="sequence-box" id="sequenceBox">
+                    <span class="empty">Noch keine Eingabe</span>
+                </div>
+
+                <div class="sequence-grid">
+                    <button class="num-btn" onclick="addSequence(1)">1</button>
+                    <button class="num-btn" onclick="addSequence(2)">2</button>
+                    <button class="num-btn" onclick="addSequence(3)">3</button>
+                    <button class="num-btn" onclick="addSequence(4)">4</button>
+                    <button class="num-btn" onclick="addSequence(5)">5</button>
+                    <button class="num-btn" onclick="addSequence(6)">6</button>
+                </div>
+
+                <div class="actions">
+                    <button class="btn clear" onclick="clearSequence()">Löschen</button>
+                    <button class="btn reset" onclick="resetAll()">Zurücksetzen</button>
+                </div>
             </div>
 
-            <div class="button-group">
-                <button class="clear-btn" onclick="clearSequence()">Sequenz löschen</button>
-                <button class="reset-btn" onclick="resetAll()">Alles zurücksetzen</button>
-            </div>
-        </div>
-
-        <!-- Bereich 3: Erweiterbar -->
-        <div class="section">
-            <div class="section-bottom">
-                📝 Bereich für weitere Funktionen - Bald verfügbar
+            <div class="panel bottom-panel">
+                Neuer Bereich / Weitere Funktionen
             </div>
         </div>
     </div>
 
     <script>
         let sequence = [];
-        let elements = [];
         let sequenceCounter = 0;
 
         function addSequence(number) {
             sequenceCounter++;
-            sequence.push({
-                number: number,
-                position: sequenceCounter
-            });
-            updateDisplay();
+            sequence.push({ number: number, pos: sequenceCounter });
+            renderSequence();
         }
 
-        function addElement(element) {
-            elements.push({
-                name: element,
-                timestamp: new Date().toLocaleTimeString('de-DE')
-            });
-            console.log('Element hinzugefügt:', element);
+        function addElement(elementName) {
+            console.log('Element gewählt:', elementName);
         }
 
-        function updateDisplay() {
-            const displayDiv = document.getElementById('sequenceDisplay');
-            
+        function renderSequence() {
+            const box = document.getElementById('sequenceBox');
+
             if (sequence.length === 0) {
-                displayDiv.innerHTML = '<span style="color: #999;">Keine Eingaben noch...</span>';
+                box.innerHTML = '<span class="empty">Noch keine Eingabe</span>';
                 return;
             }
 
-            displayDiv.innerHTML = sequence.map((item, index) => `
-                <div class="sequence-item">
-                    <span>Button ${item.number}</span>
-                    <div class="number">${item.position}</div>
-                </div>
-            `).join('');
+            box.innerHTML = sequence
+                .map(item => `
+                    <div class="seq-item">
+                        <span class="seq-no">${item.pos}</span>
+                        <span>${item.number}</span>
+                    </div>
+                `)
+                .join('');
         }
 
         function clearSequence() {
             sequence = [];
             sequenceCounter = 0;
-            updateDisplay();
+            renderSequence();
         }
 
         function resetAll() {
             sequence = [];
-            elements = [];
             sequenceCounter = 0;
-            updateDisplay();
-            console.clear();
+            renderSequence();
         }
 
-        // Initiale Anzeige
-        updateDisplay();
+        renderSequence();
     </script>
 </body>
 </html>
